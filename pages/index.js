@@ -105,11 +105,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-[#99f797] p-4 sm:p-6">
-    <img
-  src="/dino.png"
-  alt="Dino mit Kühlschrank"
-  className="hidden sm:block fixed top-4 left-4 w-24 md:w-40 lg:w-60 h-auto z-50 rounded-xl shadow-lg ring-1 ring-black/10"
+    <div className="flex justify-center">
+  <img
+    src="/dino.png"
+    alt="Dino mit Kühlschrank"
+    className="w-32 sm:w-52 md:w-72 lg:w-[18rem] h-auto rounded-xl shadow-lg ring-1 ring-black/10 mb-4"
 />
+</div>
 
       <button
         onClick={() => setShowPopup(true)}
