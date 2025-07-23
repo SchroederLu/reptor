@@ -11,12 +11,12 @@ export default async function handler(req, res) {
 
 ### Rezept X: Rezeptname
 
-#### Zutaten:
+## Zutaten:
 
 - Zutat 1
 - Zutat 2
 
-#### Zubereitung:
+# Zubereitung:
 
 1. Schritt 1
 2. Schritt 2
