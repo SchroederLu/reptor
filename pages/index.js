@@ -104,7 +104,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex items-start justify-center bg-[#99f797] p-6">
+    <div className="min-h-screen flex flex-col items-center justify-start bg-[#99f797] p-4 sm:p-6">
       <img
         src="/dino.png"
         alt="Dino mit Kühlschrank"
@@ -135,7 +135,7 @@ export default function Home() {
         </div>
       )}
 
-      <div className="w-full max-w-xl">
+      <div className="w-full max-w-xl sm:max-w-2xl">
         <h1 className="text-3xl font-bold mb-4 text-center">Was hast du im Kühlschrank?</h1>
 
         <input
@@ -182,7 +182,7 @@ export default function Home() {
         {ingredientGroups.map((group) => (
           <div key={group.title} className="mb-4">
             <h2 className="font-semibold mb-1">{group.icon} {group.title}</h2>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
               {group.items.map((item) => (
                 <button
                   key={item}
@@ -239,7 +239,7 @@ export default function Home() {
 )}
 
         {recipes && (
-          <div className="mt-8 space-y-8">
+          <div className="mt-8 space-y-8 px-2 sm:px-4">
             <ReactMarkdown
               components={{
                 h3: ({ node, ...props }) => (
