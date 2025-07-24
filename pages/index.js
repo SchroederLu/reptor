@@ -103,6 +103,17 @@ export default function Home() {
     setIngredients(ingredients.filter((item) => item !== itemToRemove));
   };
 
+  const prompt = "Paprika-Hähnchenpfanne, realistisch, food photography";
+
+  const response = await fetch("/api/generate-image", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt })
+  });
+
+  const data = await response.json();
+  setRecipeImage(data.image); // z. B. als <img src={recipeImage} />
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-[#99f797] p-4 sm:p-6">
     <div className="flex justify-center">
