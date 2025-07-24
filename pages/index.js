@@ -105,15 +105,34 @@ export default function Home() {
 
   const prompt = "Paprika-Hähnchenpfanne, realistisch, food photography";
 
-  const handleGenerateImage = async () => {
-  const response = await fetch("/api/generate-image", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ prompt })
-  });
+  const handleGenerateRecipes = async () => {
+  setLoading(true);
+  setRecipes("");
+  setRecipeImage(null); // Bild zurücksetzen
 
-  const data = await response.json();
-  setRecipeImage(data.image);
+  try {
+    const response = await fetch("/api/generate-recipes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ingredients, matchAll })
+    });
+    const data = await response.json();
+    setRecipes(data.result);
+
+    // Bild generieren auf Basis der ersten drei Zutaten
+    const imagePrompt = `${ingredients.slice(0, 3).join(", ")} Gericht, food photography, realistisch`;
+    const imageResponse = await fetch("/api/generate-image", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: imagePrompt })
+    });
+    const imageData = await imageResponse.json();
+    setRecipeImage(imageData.image);
+  } catch (error) {
+    setRecipes("Ein Fehler ist aufgetreten.");
+  } finally {
+    setLoading(false);
+  }
 };
 
   return (
@@ -152,10 +171,6 @@ export default function Home() {
 
       <div className="w-full max-w-xl sm:max-w-2xl">
         <h1 className="text-3xl font-bold mb-4 text-center">Was hast du im Kühlschrank?</h1>
-
-        {recipeImage && (
-  <img src={recipeImage} alt="Rezeptbild" className="mt-4 rounded-lg max-w-full h-auto" />
-)}
 
         <input
           type="text"
@@ -255,6 +270,16 @@ export default function Home() {
   >
     Rezepte vorschlagen
   </button>
+)}
+
+{recipeImage && (
+<div className="mt-6 flex justify-center">
+<img
+src={recipeImage}
+alt="Generiertes Rezeptbild"
+className="rounded-xl shadow-lg max-w-full sm:max-w-md"
+/>
+</div>
 )}
 
         {recipes && (
