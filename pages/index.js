@@ -153,6 +153,10 @@ export default function Home() {
       <div className="w-full max-w-xl sm:max-w-2xl">
         <h1 className="text-3xl font-bold mb-4 text-center">Was hast du im Kühlschrank?</h1>
 
+        {recipeImage && (
+  <img src={recipeImage} alt="Rezeptbild" className="mt-4 rounded-lg max-w-full h-auto" />
+)}
+
         <input
           type="text"
           value={customInput}
