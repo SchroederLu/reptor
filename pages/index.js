@@ -103,6 +103,8 @@ export default function Home() {
     setIngredients(ingredients.filter((item) => item !== itemToRemove));
   };
 
+  const prompt = "Paprika-Hähnchenpfanne, realistisch, food photography";
+
   const handleGenerateImage = async () => {
   const response = await fetch("/api/generate-image", {
     method: "POST",
