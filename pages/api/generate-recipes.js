@@ -9,14 +9,14 @@ export default async function handler(req, res) {
 
   const systemMessage = `Du bist ein hilfreicher Küchenassistent, der aus Zutaten kreative und leckere Rezepte erstellt. Gib die Antwort im Markdown-Format zurück. Formatiere jedes Rezept so:
 
-### Rezept X: Rezeptname
+### Rezeptname
 
-#### Zutaten:
+## Zutaten:
 
 - Zutat 1
 - Zutat 2
 
-#### Zubereitung:
+## Zubereitung:
 
 1. Schritt 1
 2. Schritt 2
@@ -48,36 +48,7 @@ Alle Zutaten sollen ${matchAll ? "vollständig" : "teilweise"} enthalten sein.`;
       return res.status(500).json({ result: "Fehler bei der KI-Antwort." });
     }
 
-    const markdown = json.choices[0].message.content;
-
-    // Extrahiere die einzelnen Rezepte anhand von Markdown-Trennung
-    const recipeBlocks = markdown
-      .split(/###\s*Rezept \d+:/)
-      .filter(Boolean)
-      .map((r) => r.trim());
-
-    // Für jedes Rezept ein Bild generieren
-    const imagePromises = recipeBlocks.map(async (recipe) => {
-      const titleMatch = recipe.match(/^(.*?)\n/);
-      const title = titleMatch ? titleMatch[1] : "Gericht";
-      const imagePrompt = `${title}, food photography, 4k, realistisch`;
-
-      try {
-        const imageResponse = await fetch("/api/generate-image", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt: imagePrompt }),
-        });
-        const imageData = await imageResponse.json();
-        return imageData.image || null;
-      } catch (err) {
-        return null;
-      }
-    });
-
-    const images = await Promise.all(imagePromises);
-
-    res.status(200).json({ recipes: recipeBlocks, images });
+    res.status(200).json({ result: json.choices[0].message.content });
   } catch (error) {
     console.error("Fehler bei der Rezeptgenerierung:", error);
     res.status(500).json({ result: "Ein Fehler ist aufgetreten." });
