@@ -9,21 +9,21 @@ export default async function handler(req, res) {
 
   const systemMessage = `Du bist ein hilfreicher Küchenassistent, der aus Zutaten kreative und leckere Rezepte erstellt. Gib die Antwort im Markdown-Format zurück. Formatiere jedes Rezept so:
 
-### Rezept X: Rezeptname
+### Rezeptname
 
 ## Zutaten:
 
 - Zutat 1
 - Zutat 2
 
-# Zubereitung:
+## Zubereitung:
 
 1. Schritt 1
 2. Schritt 2
 
 Vermeide generische Namen wie "Gericht 1". Verwende, wenn möglich, deutsche, ansprechende Namen.`;
 
-  const userMessage = `Erstelle 2 kreative Rezepte mit den Zutaten: ${ingredients.join(", ")}.
+  const userMessage = `Erstelle 3 kreative Rezepte mit den Zutaten: ${ingredients.join(", ")}.
 Alle Zutaten sollen ${matchAll ? "vollständig" : "teilweise"} enthalten sein.`;
 
   try {
